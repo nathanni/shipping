@@ -1,0 +1,10 @@
+﻿1 查不到怎么办
+CUTOFF
+JOBNAME
+QUETE NUMBER 
+
+2 barcode A B order怎么生成
+
+3 地址用自身的还是0开头的
+
+4 没有ORDERID就获得不了具体的 LINE 和DESCRIPTION

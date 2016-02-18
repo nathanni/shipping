@@ -11,7 +11,22 @@
 
     <package name="default" namespace="/" extends="struts-default">
 
-        <action name="get-report" class="com.atriumwindows.shipping.action.ShippingAction" method="getReport">
+        <interceptors>
+            <interceptor-stack name="shippingInterceptor">
+                <interceptor-ref name="defaultStack">
+                    <param name="prepare.alwaysInvokePrepare">false</param>
+                </interceptor-ref>
+            </interceptor-stack>
+        </interceptors>
+
+        <default-interceptor-ref name="shippingInterceptor"></default-interceptor-ref>
+
+
+        <action name="shipping-info" class="com.atriumwindows.shipping.action.ShippingAction" method="searchShippingInfo">
+            <result>/shipping.jsp</result>
+        </action>
+
+        <action name="shipping-report" class="com.atriumwindows.shipping.action.ShippingReportAction" method="getShippingReport">
             <result>/WEB-INF/pages/shipping-report.jsp</result>
         </action>
 

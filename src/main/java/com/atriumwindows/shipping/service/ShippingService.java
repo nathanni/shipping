@@ -1,6 +1,6 @@
 package com.atriumwindows.shipping.service;
 
-import com.atriumwindows.shipping.dao.ShippingInfoDao;
+import com.atriumwindows.shipping.dao.ShippingDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
  * Created by Nathan on 2/17/2016.
  */
 @Service
-public class ShippingInfoService {
+public class ShippingService {
 
-    private ShippingInfoDao shippingInfoDao;
+    private ShippingDao shippingInfoDao;
 
     @Autowired
-    public void setShippingInfoDao(ShippingInfoDao shippingInfoDao) {
+    public void setShippingInfoDao(ShippingDao shippingInfoDao) {
         this.shippingInfoDao = shippingInfoDao;
     }
 

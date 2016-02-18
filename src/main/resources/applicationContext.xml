@@ -2,7 +2,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
 
     <context:property-placeholder location="classpath:db.properties"></context:property-placeholder>
@@ -21,17 +22,31 @@
         <property name="dataSource" ref="dataSource"></property>
     </bean>
 
+    <!--annotation scan-->
+    <context:component-scan base-package="com.atriumwindows.shipping.dao"></context:component-scan>
+    <context:component-scan base-package="com.atriumwindows.shipping.service"></context:component-scan>
+    <context:component-scan base-package="com.atriumwindows.shipping.action"></context:component-scan>
+
     <!-- Transaction -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"></property>
     </bean>
 
-    <!--Enable transaction annotation-->
-    <tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
-    
-    <context:component-scan base-package="com.atriumwindows.shipping.dao"></context:component-scan>
-    <context:component-scan base-package="com.atriumwindows.shipping.service"></context:component-scan>
 
+    <!-- Transcation properties-->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="get*" isolation="READ_COMMITTED" read-only="true"/>
+            <tx:method name="*" isolation="READ_COMMITTED"></tx:method>
+        </tx:attributes>
+    </tx:advice>
+
+
+    <!-- Aspect J (AOP)-->
+    <aop:config>
+        <aop:pointcut id="txPointCut" expression="execution(* com.atriumwindows.shipping.service.*.* (..))"></aop:pointcut>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointCut"></aop:advisor>
+    </aop:config>
 
 
 </beans>

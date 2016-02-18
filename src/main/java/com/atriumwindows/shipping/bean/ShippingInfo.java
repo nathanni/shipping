@@ -1,14 +1,9 @@
 package com.atriumwindows.shipping.bean;
 
-import org.springframework.stereotype.Component;
-
 /**
  * Created by Nathan on 2/17/2016.
  */
-@Component
 public class ShippingInfo {
-
-
 
     private String salesOrder;
     private String trackingNumber;

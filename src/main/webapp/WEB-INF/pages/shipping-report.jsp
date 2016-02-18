@@ -1,3 +1,4 @@
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: nni
@@ -12,7 +13,24 @@
 </head>
 <body>
 
-    <h4>Shipping Report Page</h4>
+
+
+<center>
+    <table border="1" cellpadding="10" cellspacing="0">
+        <thead>
+            <th>Shipping Report Page</th>
+        </thead>
+
+        <tr>
+            <td><a href="">Vew ReportFor All Sales Order</a></td>
+        </tr>
+        <s:iterator value="#request.reports" var="report">
+            <tr>
+                <td><a href="shipping-report-detail?salesOrder=${report}">View Report For Sales Order #${report}</a></td>
+            </tr>
+        </s:iterator>
+    </table>
+</center>
 
 </body>
 </html>

@@ -1,26 +1,27 @@
 package com.atriumwindows.shipping.action;
 
 import com.atriumwindows.shipping.bean.ShippingInfo;
-import com.atriumwindows.shipping.service.ShippingInfoService;
+import com.atriumwindows.shipping.service.ShippingService;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 /**
  * Created by nni on 2/17/2016.
  */
 @Controller
+@Scope("prototype")
 public class ShippingAction extends ActionSupport implements ModelDriven<ShippingInfo>, Preparable {
 
 
 
-    /*property: ShippingInfoService*/
-    private ShippingInfoService shippingInfoService;
+    private ShippingService shippingInfoService;
 
     @Autowired
-    public void setShippingInfoService(ShippingInfoService shippingInfoService) {
+    public void setShippingInfoService(ShippingService shippingInfoService) {
         this.shippingInfoService = shippingInfoService;
     }
 

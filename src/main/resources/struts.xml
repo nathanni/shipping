@@ -13,7 +13,7 @@
 
         <interceptors>
             <interceptor-stack name="shippingInterceptor">
-                <interceptor-ref name="defaultStack">
+                <interceptor-ref name="paramsPrepareParamsStack">
                     <param name="prepare.alwaysInvokePrepare">false</param>
                 </interceptor-ref>
             </interceptor-stack>
@@ -27,7 +27,11 @@
         </action>
 
         <action name="shipping-report" class="com.atriumwindows.shipping.action.ShippingReportAction" method="getShippingReport">
-            <result>/WEB-INF/pages/shipping-report.jsp</result>
+            <result name="report">/WEB-INF/pages/shipping-report.jsp</result>
+        </action>
+        
+        <action name="shipping-report-detail" class="shippingReportAction" method="getShippingReportDetail">
+            <result name="detail">/WEB-INF/pages/shipping-report-detail.jsp</result>
         </action>
 
     </package>

@@ -81,7 +81,7 @@
 
 <center><font color="red"><s:actionerror></s:actionerror></font></center>
 
-<s:form action="get-report" method="POST">
+<s:form action="shipping-report" method="POST">
     <table border="1" align="center" id="container" cellspacing="0" cellpadding="10">
         <s:textfield name="loadNumber" label="Load Number"></s:textfield>
         <s:submit value="Print Preview"></s:submit>

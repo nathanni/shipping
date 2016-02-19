@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Report For Load #70800</title>
+    <title>Report For Load#${loadNumber}</title>
 </head>
 <body>
 
@@ -22,9 +22,10 @@
         </thead>
 
         <tr>
-            <td><a href="">Vew ReportFor All Sales Order</a></td>
+            <td><a href="shipping-report-detail-all">Vew Reports For All Sales Order</a></td>
+
         </tr>
-        <s:iterator value="#request.reports" var="report">
+        <s:iterator value="#session.reports" var="report">
             <tr>
                 <td><a href="shipping-report-detail?salesOrder=${report}">View Report For Sales Order #${report}</a></td>
             </tr>

@@ -7,7 +7,7 @@ public class ShippingReportLine {
 
     private Integer quantity;
     private String partNumber;
-    private String extentedPartNumber;
+    private String extendedPartNumber;
     private String infoPartNumber;
     private String description;
     private String productionText;
@@ -29,12 +29,12 @@ public class ShippingReportLine {
         this.partNumber = partNumber;
     }
 
-    public String getExtentedPartNumber() {
-        return extentedPartNumber;
+    public String getExtendedPartNumber() {
+        return extendedPartNumber;
     }
 
-    public void setExtentedPartNumber(String extentedPartNumber) {
-        this.extentedPartNumber = extentedPartNumber;
+    public void setExtendedPartNumber(String extendedPartNumber) {
+        this.extendedPartNumber = extendedPartNumber;
     }
 
     public String getInfoPartNumber() {
@@ -74,7 +74,7 @@ public class ShippingReportLine {
         return "ShippingReportLine{" +
                 "quantity=" + quantity +
                 ", partNumber='" + partNumber + '\'' +
-                ", extentedPartNumber='" + extentedPartNumber + '\'' +
+                ", extendedPartNumber='" + extendedPartNumber + '\'' +
                 ", infoPartNumber='" + infoPartNumber + '\'' +
                 ", description='" + description + '\'' +
                 ", productionText='" + productionText + '\'' +
@@ -82,10 +82,10 @@ public class ShippingReportLine {
                 '}';
     }
 
-    public ShippingReportLine(Integer quantity, String partNumber, String extentedPartNumber, String infoPartNumber, String description, String productionText, String glassText) {
+    public ShippingReportLine(Integer quantity, String partNumber, String extendedPartNumber, String infoPartNumber, String description, String productionText, String glassText) {
         this.quantity = quantity;
         this.partNumber = partNumber;
-        this.extentedPartNumber = extentedPartNumber;
+        this.extendedPartNumber = extendedPartNumber;
         this.infoPartNumber = infoPartNumber;
         this.description = description;
         this.productionText = productionText;

@@ -5,7 +5,7 @@ import com.atriumwindows.shipping.service.ShippingReportService;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
-import org.apache.struts2.interceptor.RequestAware;
+import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -18,12 +18,15 @@ import java.util.Map;
  */
 @Controller
 @Scope("prototype")
-public class ShippingReportAction extends ActionSupport implements RequestAware, ModelDriven<ShippingReport>, Preparable {
+public class ShippingReportAction extends ActionSupport implements SessionAware, ModelDriven<ShippingReport>, Preparable {
 
 
     private String loadNumber;
     public void setLoadNumber(String loadNumber) {
         this.loadNumber = loadNumber;
+    }
+    public String getLoadNumber() {
+        return loadNumber;
     }
 
     private String salesOrder;
@@ -31,11 +34,6 @@ public class ShippingReportAction extends ActionSupport implements RequestAware,
         this.salesOrder = salesOrder;
     }
 
-    private Map<String, Object> request;
-
-    public void setRequest(Map<String, Object> map) {
-        request = map;
-    }
 
     private ShippingReportService shippingReportService;
 
@@ -44,16 +42,24 @@ public class ShippingReportAction extends ActionSupport implements RequestAware,
         this.shippingReportService = shippingReportService;
     }
 
+    /* get shipping report list*/
     public String getShippingReport() {
 
         List<String> shippingReportList = shippingReportService.getShippingReportList(loadNumber);
-        request.put("reports",shippingReportList);
+        session.put("reports",shippingReportList);
 
         return "report";
     }
 
 
+    public String getShippingReportDetailAll() {
 
+        return "all";
+    }
+
+
+
+    /* get shipping report detail*/
     private ShippingReport shippingReport;
 
     public String getShippingReportDetail() {
@@ -63,13 +69,12 @@ public class ShippingReportAction extends ActionSupport implements RequestAware,
     }
 
     public void prepareGetShippingReportDetail() {
-        if(salesOrder != null) {
-            shippingReport = shippingReportService.getShippingReport(salesOrder);
+        if(salesOrder != null && !salesOrder.isEmpty()) {
+            if(salesOrder.matches("^[AB]{1}\\d+")) //A B SubOrder
+                shippingReport =shippingReportService.getShippingReportForSubOrder(salesOrder);
+            else
+                shippingReport = shippingReportService.getShippingReport(salesOrder);
         }
-        else {
-            shippingReport = new ShippingReport();
-        }
-
     }
 
 
@@ -80,4 +85,9 @@ public class ShippingReportAction extends ActionSupport implements RequestAware,
 
 
     public void prepare() throws Exception {}
+
+    private Map<String, Object> session;
+    public void setSession(Map<String, Object> map) {
+        this.session = map;
+    }
 }

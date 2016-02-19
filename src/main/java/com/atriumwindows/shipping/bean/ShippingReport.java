@@ -9,6 +9,8 @@ import java.util.List;
  */
 public class ShippingReport {
 
+    private String loadNumber;
+
     private String salesOrder;
     private String accountId;
     private String accountName;  //same as billName;
@@ -42,6 +44,13 @@ public class ShippingReport {
     /*LINES*/
     List<ShippingReportLine> shippingLines;
 
+    public String getLoadNumber() {
+        return loadNumber;
+    }
+
+    public void setLoadNumber(String loadNumber) {
+        this.loadNumber = loadNumber;
+    }
 
     public String getSalesOrder() {
         return salesOrder;
@@ -247,7 +256,8 @@ public class ShippingReport {
     @Override
     public String toString() {
         return "ShippingReport{" +
-                "salesOrder='" + salesOrder + '\'' +
+                "loadNumber='" + loadNumber + '\'' +
+                ", salesOrder='" + salesOrder + '\'' +
                 ", accountId='" + accountId + '\'' +
                 ", accountName='" + accountName + '\'' +
                 ", cutOffDay='" + cutOffDay + '\'' +

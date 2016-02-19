@@ -34,6 +34,10 @@
             <result name="detail">/WEB-INF/pages/shipping-report-detail.jsp</result>
         </action>
 
+        <action name="shipping-report-detail-all" class="shippingReportAction" method="getShippingReportDetailAll">
+            <result name="all">/WEB-INF/pages/shipping-report-detail-all.jsp</result>
+        </action>
+
     </package>
 
 </struts>

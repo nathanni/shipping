@@ -34,6 +34,11 @@ public class ShippingReportService {
         return shippingReportDao.getShippingReportLines(orderId);
     }
 
+
+    public ShippingReport getShippingReportForSubOrder(String salesOrder) {
+        return shippingReportDao.getShippingReportForSubOrder(salesOrder);
+    }
+
 }
 
 

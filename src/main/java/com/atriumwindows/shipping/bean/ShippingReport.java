@@ -16,7 +16,7 @@ public class ShippingReport {
     private String orderDate;
     private String dueDate;
     private String shipCode;
-    private String shipcCodeDesc;
+    private String shipCodeDesc;
     private String regionCode;
     private String routeCode;
     private String orderId;
@@ -25,8 +25,8 @@ public class ShippingReport {
 
     /*SHIP TO*/
     private String shipName;
-    private String shipStreet1;
-    private String shipStreet2;
+    private String shipAddress1;
+    private String shipAddress2;
     private String shipCity;
     private String shipState;
     private String shipZip;
@@ -99,12 +99,12 @@ public class ShippingReport {
         this.shipCode = shipCode;
     }
 
-    public String getShipcCodeDesc() {
-        return shipcCodeDesc;
+    public String getShipCodeDesc() {
+        return shipCodeDesc;
     }
 
-    public void setShipcCodeDesc(String shipcCodeDesc) {
-        this.shipcCodeDesc = shipcCodeDesc;
+    public void setShipCodeDesc(String shipCodeDesc) {
+        this.shipCodeDesc = shipCodeDesc;
     }
 
     public String getRegionCode() {
@@ -155,20 +155,20 @@ public class ShippingReport {
         this.shipName = shipName;
     }
 
-    public String getShipStreet1() {
-        return shipStreet1;
+    public String getShipAddress1() {
+        return shipAddress1;
     }
 
-    public void setShipStreet1(String shipStreet1) {
-        this.shipStreet1 = shipStreet1;
+    public void setShipAddress1(String shipAddress1) {
+        this.shipAddress1 = shipAddress1;
     }
 
-    public String getShipStreet2() {
-        return shipStreet2;
+    public String getShipAddress2() {
+        return shipAddress2;
     }
 
-    public void setShipStreet2(String shipStreet2) {
-        this.shipStreet2 = shipStreet2;
+    public void setShipAddress2(String shipAddress2) {
+        this.shipAddress2 = shipAddress2;
     }
 
     public String getShipCity() {
@@ -254,15 +254,15 @@ public class ShippingReport {
                 ", orderDate='" + orderDate + '\'' +
                 ", dueDate='" + dueDate + '\'' +
                 ", shipCode='" + shipCode + '\'' +
-                ", shipcCodeDesc='" + shipcCodeDesc + '\'' +
+                ", shipCodeDesc='" + shipCodeDesc + '\'' +
                 ", regionCode='" + regionCode + '\'' +
                 ", routeCode='" + routeCode + '\'' +
                 ", orderId='" + orderId + '\'' +
                 ", jobName='" + jobName + '\'' +
                 ", purchaseOrder='" + purchaseOrder + '\'' +
                 ", shipName='" + shipName + '\'' +
-                ", shipStreet1='" + shipStreet1 + '\'' +
-                ", shipStreet2='" + shipStreet2 + '\'' +
+                ", shipAddress1='" + shipAddress1 + '\'' +
+                ", shipAddress2='" + shipAddress2 + '\'' +
                 ", shipCity='" + shipCity + '\'' +
                 ", shipState='" + shipState + '\'' +
                 ", shipZip='" + shipZip + '\'' +

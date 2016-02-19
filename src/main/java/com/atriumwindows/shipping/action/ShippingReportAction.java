@@ -58,7 +58,6 @@ public class ShippingReportAction extends ActionSupport implements RequestAware,
 
     public String getShippingReportDetail() {
 
-        System.out.println(shippingReport);
         return "detail";
 
     }

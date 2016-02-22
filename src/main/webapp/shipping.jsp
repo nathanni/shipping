@@ -13,26 +13,55 @@
     <script type="text/javascript" src="scripts/jquery-1.12.0.min.js"></script>
     <script type="text/javascript">
 
-        $(document).ready(function () {
-            $('#selectlist').change(function() {
-                var $this = $(this);
-                var td = $this.parent().next("td");
-                td.find("input").remove();
-                var select = $this.val();
-                if(select == "Sales Order") {
-                    td.append("<input type='text' name='salesOrder'/>");
-                } else if(select == "Tracking Number") {
-                    var tr = $this.parent().parent();
-                    td.append("<input type='text' name='trackingNumber'/>");
+        /*        $(document).ready(function () {
+         $('#selectlist').change(function() {
+         var $this = $(this);
+         var td = $this.parent().next("td");
+         td.find("input").remove();
+         var select = $this.val();
+         if(select == "Sales Order") {
+         td.append("<input type='text' name='salesOrder'/>");
+         } else if(select == "Tracking Number") {
+         var tr = $this.parent().parent();
+         td.append("<input type='text' name='trackingNumber'/>");
+         }
+         });
+         });*/
+
+
+
+        $(function() {
+            //disable anther textfield when users hit "SEARCH"
+            $('#searchSalesOrder').click(function(){
+                $('#trackingNumber').prop('disabled', true);
+            });
+            $('#searchTrackingNumber').click(function(){
+                $('#salesOrder').prop('disabled', true);
+            });
+
+
+            //validate load number
+            $('#searchLoadNumber').click(function () {
+                var val = $('#loadNumber').val();
+                if (Number(val) > 0) {
+                    while (val.length < 5) {
+                        val = "0" + val;
+                    }
+                    $('#loadNumber').val(val);
+                }
+                else {
+                    alert("Invalid Load Number");
+                    return false;
                 }
             });
+
+
         });
+
     </script>
 </head>
 <body>
 
-
-<s:actionmessage></s:actionmessage>
 <s:form action="shipping-info" method="POST" theme="simple" id="searchform">
     <table border="1" align="center" id="container" cellspacing="0" cellpadding="10">
         <thead>
@@ -42,9 +71,15 @@
         </thead>
         <tbody>
         <tr>
-            <td><s:select list="{'Sales Order', 'Tracking Number'}" id="selectlist"></s:select></td>
-            <td><s:textfield name="salesOrder"></s:textfield></td>
-            <td><s:submit value="Search"></s:submit></td>
+                <%--<td><s:select list="{'Sales Order', 'Tracking Number'}" id="selectlist"></s:select></td>--%>
+            <td>Sales Order</td>
+            <td><s:textfield name="salesOrder" id="salesOrder"></s:textfield></td>
+            <td><s:submit value="Search" id="searchSalesOrder"></s:submit></td>
+        </tr>
+        <tr>
+            <td>Tracking Number</td>
+            <td><s:textfield name="trackingNumber" id="trackingNumber"></s:textfield></td>
+            <td><s:submit value="Search" id="searchTrackingNumber"></s:submit></td>
         </tr>
         <tr>
             <td>Shipping Method</td>
@@ -83,8 +118,8 @@
 
 <s:form action="shipping-report" method="POST">
     <table border="1" align="center" id="container" cellspacing="0" cellpadding="10">
-        <s:textfield name="loadNumber" label="Load Number"></s:textfield>
-        <s:submit value="Print Preview"></s:submit>
+        <s:textfield name="loadNumber" label="Load Number" id="loadNumber"></s:textfield>
+        <s:submit value="Print Preview" id="searchLoadNumber"></s:submit>
     </table>
 </s:form>
 

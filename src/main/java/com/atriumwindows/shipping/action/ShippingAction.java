@@ -29,21 +29,32 @@ public class ShippingAction extends ActionSupport implements ModelDriven<Shippin
 
     /*action: shipping-info*/
     public String searchShippingInfo() {
-        System.out.println(shippingInfo);
+        String salesOrder = shippingInfo.getSalesOrder() == null ? "":shippingInfo.getSalesOrder().trim();
+        String trackingNumber = shippingInfo.getTrackingNumber() == null ? "":shippingInfo.getTrackingNumber().trim();
+        String loadNumber;
+        if(!salesOrder.isEmpty()) {
+            trackingNumber = shippingInfoService.getTrackingNumberBySalesOrder(salesOrder);
+            if (trackingNumber == null) {
+                addActionError("No Tracking Number was found.");
+            }
 
-        String loadNumber = shippingInfoService.getLoadNumberBySalesOrder(shippingInfo.getSalesOrder());
-        String trakcingNumber = shippingInfoService.getTrackingNumberBySalesOrder(shippingInfo.getSalesOrder());
+        } else if(!trackingNumber.isEmpty()) {
+            salesOrder = shippingInfoService.getSalesOrderByTrackingNumber(trackingNumber);
+            if(salesOrder == null) {
+                addActionError("No Sales Order was found.");
+            }
+        } else {
+            return SUCCESS;
+        }
 
+        loadNumber = shippingInfoService.getLoadNumberBySalesOrder(salesOrder);
         if (loadNumber == null) {
-            addActionError("No Load Number was found for that Sales Order.");
+            addActionError("No Load Number was found.");
         }
-        if (trakcingNumber == null) {
-            addActionError("No Tracking Number was found for that Sales Order.");
-        }
-
+        shippingInfo.setSalesOrder(salesOrder);
         shippingInfo.setLoadNumber(loadNumber);
-        shippingInfo.setTrackingNumber(trakcingNumber);
-
+        shippingInfo.setTrackingNumber(trackingNumber);
+        System.out.println(shippingInfo);
         return SUCCESS;
     }
 

@@ -17,12 +17,9 @@
 
 <center>
     <table border="1" cellpadding="10" cellspacing="0">
-        <thead>
-            <th>Shipping Report Page</th>
-        </thead>
 
         <tr>
-            <td><a href="shipping-report-detail-all">Vew Reports For All Sales Order</a></td>
+            <td align="center"><a href="shipping-report-detail-all">Vew Reports For All Sales Order</a></td>
 
         </tr>
         <s:iterator value="#session.reports" var="report">

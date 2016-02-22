@@ -19,9 +19,11 @@ import java.util.List;
 public class ShippingReportDao extends BaseDao {
 
     public List<String> getShippingReportList(String loadNumber) {
+        /*Only Search A, B, 0 orders*/
         String sql = "SELECT sales_order_number FROM DTS_PLAN_HEADER d " +
                 "WHERE to_date(d.so_create_date,'yyyy-mm-dd') >  Add_months(SYSDATE, -48) " +
-                "AND d.assigned_load = ?";
+                "AND d.assigned_load = ? AND " +
+                "(sales_order_number LIKE 'A%' OR sales_order_number LIKE 'B%' OR sales_order_number LIKE '0%')";
 
         return jdbcTemplate.query(sql, new RowMapper<String>() {
             public String mapRow(ResultSet resultSet, int i) throws SQLException {

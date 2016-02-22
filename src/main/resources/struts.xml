@@ -21,6 +21,12 @@
 
         <default-interceptor-ref name="shippingInterceptor"></default-interceptor-ref>
 
+        <global-results>
+            <result name="Exception">/WEB-INF/pages/error.jsp</result>
+        </global-results>
+        <global-exception-mappings>
+            <exception-mapping exception="java.util.NoSuchElementException" result="Exception"/>
+        </global-exception-mappings>
 
         <action name="shipping-info" class="com.atriumwindows.shipping.action.ShippingAction" method="searchShippingInfo">
             <result>/shipping.jsp</result>
@@ -37,6 +43,7 @@
         <action name="shipping-report-detail-all" class="shippingReportAction" method="getShippingReportDetailAll">
             <result name="all">/WEB-INF/pages/shipping-report-detail-all.jsp</result>
         </action>
+
 
     </package>
 

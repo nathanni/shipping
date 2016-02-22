@@ -5,6 +5,7 @@ import com.atriumwindows.shipping.service.ShippingReportService;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
+import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -12,24 +13,28 @@ import org.springframework.stereotype.Controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 /**
  * Created by Nathan on 2/17/2016.
  */
 @Controller
 @Scope("prototype")
-public class ShippingReportAction extends ActionSupport implements SessionAware, ModelDriven<ShippingReport>, Preparable {
+public class ShippingReportAction extends ActionSupport implements RequestAware,SessionAware, ModelDriven<ShippingReport>, Preparable {
 
 
     private String loadNumber;
+
     public void setLoadNumber(String loadNumber) {
         this.loadNumber = loadNumber;
     }
+
     public String getLoadNumber() {
         return loadNumber;
     }
 
     private String salesOrder;
+
     public void setSalesOrder(String salesOrder) {
         this.salesOrder = salesOrder;
     }
@@ -46,7 +51,11 @@ public class ShippingReportAction extends ActionSupport implements SessionAware,
     public String getShippingReport() {
 
         List<String> shippingReportList = shippingReportService.getShippingReportList(loadNumber);
-        session.put("reports",shippingReportList);
+        if (shippingReportList == null || shippingReportList.size() == 0) {
+            request.put("loadNumber", loadNumber);
+            throw new NoSuchElementException();
+        }
+        session.put("reports", shippingReportList);
 
         return "report";
     }
@@ -58,20 +67,23 @@ public class ShippingReportAction extends ActionSupport implements SessionAware,
     }
 
 
-
     /* get shipping report detail*/
     private ShippingReport shippingReport;
 
     public String getShippingReportDetail() {
 
+        if(shippingReport == null) {
+            request.put("salesOrder", salesOrder);
+            throw new NoSuchElementException();
+        }
         return "detail";
 
     }
 
     public void prepareGetShippingReportDetail() {
-        if(salesOrder != null && !salesOrder.isEmpty()) {
-            if(salesOrder.matches("^[AB]{1}\\d+")) //A B SubOrder
-                shippingReport =shippingReportService.getShippingReportForSubOrder(salesOrder);
+        if (salesOrder != null && !salesOrder.isEmpty()) {
+            if (salesOrder.matches("^[AB]{1}\\d+")) //A B SubOrder
+                shippingReport = shippingReportService.getShippingReportForSubOrder(salesOrder);
             else
                 shippingReport = shippingReportService.getShippingReport(salesOrder);
         }
@@ -83,11 +95,17 @@ public class ShippingReportAction extends ActionSupport implements SessionAware,
     }
 
 
-
-    public void prepare() throws Exception {}
+    public void prepare() throws Exception {
+    }
 
     private Map<String, Object> session;
+
     public void setSession(Map<String, Object> map) {
         this.session = map;
+    }
+
+    private Map<String, Object> request;
+    public void setRequest(Map<String, Object> map) {
+        request = map;
     }
 }

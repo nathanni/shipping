@@ -1,0 +1,38 @@
+table {
+    margin-top: 3px;
+    margin-bottom: 3px;
+    margin-left: 45px;
+    margin-right: 45px;
+    border: none;
+    border-spacing: 1px;
+    table-layout: fixed;
+}
+
+th {
+    padding-left: 4px;
+    padding-right: 4px;
+    text-align: left;
+    background-color: #ff973c;
+}
+
+td {
+    padding-left: 4px;
+    padding-right: 4px;
+    background-color: #ffe9d2;
+
+}
+
+td.white{
+    background-color: white;
+
+}
+th.white{
+    background-color: white;
+
+}
+
+/*COLUMN GROUP*/
+.t10    { width:5% }
+.t20    { width:5% }
+.t30    { width:35% }
+.t40    { width:55% }

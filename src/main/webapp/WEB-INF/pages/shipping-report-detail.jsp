@@ -9,117 +9,124 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Request For Sales Order #${salesOrder}</title>
+    <title>Report For Sales Order #${salesOrder}</title>
     <script type="text/javascript" src="../../scripts/jquery-1.12.0.min.js"></script>
     <script type="text/javascript" src="../../scripts/jquery-barcode.min.js"></script>
-
+    <link rel="stylesheet" href="../../style/shipping.css">
 </head>
 <body>
-
-<table border="1" cellpadding="10" cellspacing="0">
+<center>
+<table>
+    <colgroup>
+        <col class="t10">
+        <col class="t20">
+        <col class="t30">
+        <col class="t40">
+    </colgroup>
     <tr>
-        <td>Sales Order</td>
-        <td>
+        <th colspan="3">Sales Order</th>
+        <td class="white">
+            <center>
             <div class="bcTarget">
                 <input type="hidden" value="${salesOrder}">
             </div>
+            </center>
         </td>
     </tr>
     <tr>
-        <td>Customer Code</td>
+        <th colspan="3">Customer Code</th>
         <td>${accountId} - ${accountName}</td>
     </tr>
     <tr>
-        <td>Cut Off Dayr</td>
+        <th colspan="3">Cut Off Day</th>
         <td>${cutOffDay}</td>
     </tr>
     <tr>
-        <td>Order Date</td>
+        <th colspan="3">Order Date</th>
         <td>${orderDate}</td>
     </tr>
     <tr>
-        <td>Due Date</td>
+        <th colspan="3">Due Date</th>
         <td>${dueDate}</td>
     </tr>
     <tr>
-        <td>Sales Order</td>
+        <th colspan="3">Sales Order</th>
         <td>${salesOrder}</td>
     </tr>
     <tr>
-        <td>Ship Code</td>
+        <th colspan="3">Ship Code</th>
         <td>${shipCode} - ${shipCodeDesc}</td>
     </tr>
     <tr>
-        <td>Region Code</td>
+        <th colspan="3">Region Code</th>
         <td>${salesOrder}</td>
     </tr>
     <tr>
-        <td>Route Code</td>
+        <th colspan="3">Route Code</th>
         <td>${routeCode}</td>
     </tr>
     <tr>
-        <td>Quote Number</td>
+        <th colspan="3">Quote Number</th>
         <td>${orderId}</td>
     </tr>
     <tr>
-        <td>Job Name</td>
+        <th colspan="3">Job Name</th>
         <td>${jobName}</td>
     </tr>
     <tr>
-        <td>Purchase Order</td>
+        <th colspan="3">Purchase Order</th>
         <td>${purchaseOrder}</td>
     </tr>
     <tr>
-        <td colspan="2">&nbsp;</td>
+        <td colspan="4" class="white">&nbsp;</td>
     </tr>
 
     <tr>
-        <td>Ship To</td>
-        <td>Bill To</td>
+        <th colspan="3">Ship To</th>
+        <th colspan="3">Bill To</th>
     </tr>
     <tr>
-        <td>${shipName}</td>
-        <td>${accountName}</td>
+        <td colspan="3" class="white">${shipName}</td>
+        <td class="white">${accountName}</td>
     </tr>
     <tr>
-        <td>${shipAddress1}</td>
-        <td>${billAddress1}</td>
+        <td colspan="3" class="white">${shipAddress1}</td>
+        <td class="white">${billAddress1}</td>
     </tr>
     <tr>
-        <td>${shipAddress2}</td>
-        <td>${billAddress2}</td>
+        <td colspan="3" class="white">${shipAddress2}</td>
+        <td class="white">${billAddress2}</td>
     </tr>
     <tr>
-        <td>${shipCity}&nbsp;${shipState}&nbsp;${shipZip}</td>
-        <td>${billCity}&nbsp;${billState}&nbsp;${billZip}</td>
-    </tr>
-    <tr>
-        <td colspan="2">&nbsp;</td>
+        <td colspan="3" class="white">${shipCity}&nbsp;${shipState}&nbsp;${shipZip}</td>
+        <td class="white">${billCity}&nbsp;${billState}&nbsp;${billZip}</td>
     </tr>
     <s:iterator value="shippingLines" var="shippingLine" status="status">
+        <tr><td colspan="4" class="white"><hr /></td></tr>
         <tr>
-            <th>Line</th>
-            <th>Quantity</th>
-            <th>Part Number</th>
-            <th>Description</th>
+            <th class="white">Line</th>
+            <th class="white">Quantity</th>
+            <th class="white">Part Number</th>
+            <th class="white">Description</th>
         </tr>
         <tr>
-            <td>${status.count}</td>
-            <td>${shippingLine.quantity}</td>
-            <td>${shippingLine.partNumber}</td>
-            <td>${shippingLine.description}</td>
+            <td class="white">${status.count}</td>
+            <td class="white">${shippingLine.quantity}</td>
+            <td class="white">${shippingLine.partNumber}</td>
+            <td class="white">${shippingLine.description}</td>
         </tr>
         <tr>
-            <th>Production Text:</th>
-            <td>${shippingLine.productionText}</td>
+            <th colspan="3" class="white">Production Text:</th>
+            <td class="white">${shippingLine.productionText}</td>
         </tr>
         <tr>
-            <th>Glass Text:</th>
-            <td>${shippingLine.glassText}</td>
+            <th colspan="3" class="white">Glass Text:</th>
+            <td class="white">${shippingLine.glassText}</td>
         </tr>
     </s:iterator>
+    <tr><td colspan="4" class="white"><hr color="red" /></td></tr>
 </table>
-
+</center>
 </body>
 <script type="text/javascript">
     <%--Generate Barcode 39--%>
@@ -127,7 +134,7 @@
         $(".bcTarget").each(function(){
             var $this = $(this);
             var salesOrder = $this.find("input:first").val();
-            $this.barcode(salesOrder, "code39",{barWidth:2, barHeight:40, fontSize:15});
+            $this.barcode(salesOrder, "code39",{barWidth:3, barHeight:35, fontSize:15});
         });
 
     });

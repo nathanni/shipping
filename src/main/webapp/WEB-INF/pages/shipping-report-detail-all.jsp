@@ -10,6 +10,11 @@
 <html>
 <head>
     <title>All Reports</title>
+    <style>
+        table {
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
 

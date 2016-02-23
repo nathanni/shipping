@@ -10,9 +10,9 @@
 <html>
 <head>
     <title>Report For Sales Order #${salesOrder}</title>
-    <script type="text/javascript" src="../../scripts/jquery-1.12.0.min.js"></script>
-    <script type="text/javascript" src="../../scripts/jquery-barcode.min.js"></script>
-    <link rel="stylesheet" href="../../style/shipping.css">
+    <script type="text/javascript" src="/scripts/jquery-1.12.0.min.js"></script>
+    <script type="text/javascript" src="/scripts/jquery-barcode.min.js"></script>
+    <link rel="stylesheet" href="/style/shipping.css">
 </head>
 <body>
 <center>

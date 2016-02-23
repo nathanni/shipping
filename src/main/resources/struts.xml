@@ -29,7 +29,7 @@
         </global-exception-mappings>
 
         <action name="shipping-info" class="com.atriumwindows.shipping.action.ShippingAction" method="searchShippingInfo">
-            <result>/shipping.jsp</result>
+            <result>/index.jsp</result>
         </action>
 
         <action name="shipping-report" class="com.atriumwindows.shipping.action.ShippingReportAction" method="getShippingReport">

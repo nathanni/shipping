@@ -32,4 +32,17 @@ public class ShippingService {
     public String getTrackingNumberBySalesOrder(String salesOrder) {
         return shippingInfoDao.getTrackingNumberBySalesOrder(salesOrder);
     }
+
+    /* only insert data if salesOrder is not associate with trackingNumber*/
+    public boolean saveShippingInfo(String salesOrder, String trackingNumber, String shippingMethod) {
+        if(!checkAssociate(salesOrder, trackingNumber)) {
+            shippingInfoDao.saveShippingInfo(salesOrder, trackingNumber, shippingMethod);
+            return true;
+        }
+        else return false;
+    }
+
+    public boolean checkAssociate(String salesOrder, String trackingNumber) {
+        return shippingInfoDao.checkAssociate(salesOrder, trackingNumber);
+    }
 }

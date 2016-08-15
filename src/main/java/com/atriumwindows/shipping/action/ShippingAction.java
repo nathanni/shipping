@@ -2,6 +2,7 @@ package com.atriumwindows.shipping.action;
 
 import com.atriumwindows.shipping.bean.ShippingInfo;
 import com.atriumwindows.shipping.service.ShippingService;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
@@ -15,8 +16,6 @@ import org.springframework.stereotype.Controller;
 @Controller
 @Scope("prototype")
 public class ShippingAction extends ActionSupport implements ModelDriven<ShippingInfo>, Preparable {
-
-
 
     private ShippingService shippingInfoService;
 
@@ -54,7 +53,6 @@ public class ShippingAction extends ActionSupport implements ModelDriven<Shippin
         shippingInfo.setSalesOrder(salesOrder);
         shippingInfo.setLoadNumber(loadNumber);
         shippingInfo.setTrackingNumber(trackingNumber);
-        System.out.println(shippingInfo);
         return SUCCESS;
     }
 
@@ -65,6 +63,33 @@ public class ShippingAction extends ActionSupport implements ModelDriven<Shippin
     public void prepareSearchShippingInfo() {
         shippingInfo = new ShippingInfo();
     }
+
+    public String saveShippingInfo() {
+
+        String salesOrder = shippingInfo.getSalesOrder() == null ? "":shippingInfo.getSalesOrder().trim();
+        String trackingNumber = shippingInfo.getTrackingNumber() == null ? "":shippingInfo.getTrackingNumber().trim();
+        String shippingMethod = shippingInfo.getShippingMethod() == null ? "":shippingInfo.getShippingMethod();
+
+        if (!salesOrder.isEmpty() && !trackingNumber.isEmpty()) {
+            boolean saveResult = shippingInfoService.saveShippingInfo(salesOrder, trackingNumber, shippingMethod);
+
+            if (!saveResult) {
+                addActionError(trackingNumber + " was associated with Sales Order " + salesOrder);
+            } else {
+                addActionError(trackingNumber + " is already associated with Sales Order " + salesOrder);
+            }
+            shippingInfo.setSalesOrder(null);
+            shippingInfo.setTrackingNumber(null);
+            ActionContext.getContext().getValueStack().push(shippingInfo);
+        }
+
+        return SUCCESS;
+    }
+
+    public void prepareSaveShippingInfo() {
+        shippingInfo = new ShippingInfo();
+    }
+
 
     public void prepare() throws Exception {
     }

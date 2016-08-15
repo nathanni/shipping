@@ -13,9 +13,15 @@ public class TestShippingDaoAndService extends TestBase {
     public void test() {
 
         shippingInfoService = (ShippingService) applicationContext.getBean("shippingService");
-        System.out.println(shippingInfoService.getLoadNumberBySalesOrder("00972801"));
-        System.out.println(shippingInfoService.getTrackingNumberBySalesOrder("01764595"));
-        System.out.println(shippingInfoService.getSalesOrderByTrackingNumber("1Z6369220341385280"));
+//        System.out.println(shippingInfoService.getLoadNumberBySalesOrder("00972801"));
+//        System.out.println(shippingInfoService.getTrackingNumberBySalesOrder("01764595"));
+//        System.out.println(shippingInfoService.getSalesOrderByTrackingNumber("1Z6369220341385280"));
+//
+
+        //shippingInfoService.saveShippingInfo("88888888","8888888888888888","FedEx");
+        System.out.println(shippingInfoService.checkAssociate("88888888","8888888888888888"));
+
+
 
     }
 

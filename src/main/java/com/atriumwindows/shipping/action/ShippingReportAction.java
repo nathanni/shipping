@@ -52,7 +52,7 @@ public class ShippingReportAction extends ActionSupport implements RequestAware,
 
         List<String> shippingReportList = shippingReportService.getShippingReportList(loadNumber);
         if (shippingReportList == null || shippingReportList.size() == 0) {
-            request.put("loadNumber", loadNumber);
+            request.put("loadNumberForErrorPage", loadNumber);
             throw new NoSuchElementException();
         }
         session.put("reports", shippingReportList);
@@ -62,7 +62,6 @@ public class ShippingReportAction extends ActionSupport implements RequestAware,
 
 
     public String getShippingReportDetailAll() {
-
         return "all";
     }
 
@@ -73,7 +72,7 @@ public class ShippingReportAction extends ActionSupport implements RequestAware,
     public String getShippingReportDetail() {
 
         if(shippingReport == null) {
-            request.put("salesOrder", salesOrder);
+            request.put("salesOrderForErrorPage", salesOrder);
             throw new NoSuchElementException();
         }
         return "detail";

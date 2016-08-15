@@ -1,8 +1,10 @@
 package com.atriumwindows.shipping.dao;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -49,4 +51,39 @@ public class ShippingDao extends BaseDao {
             return strLst.get(0);
         }
     }
+
+
+
+
+
+
+    public void saveShippingInfo(String salesOrder, String trackingNumber, String shippingMethod) {
+
+        Date date = new Date(System.currentTimeMillis());
+
+
+        String sql = "INSERT INTO tracking (Sales_Order_Number, Tracking_Number, Carrier, DateTime) VALUES (?, ?, ?, ?)";
+
+        jdbcTemplate.update(sql, new Object[] {
+                salesOrder, trackingNumber, shippingMethod, date
+        });
+
+
+    }
+
+    public boolean checkAssociate(String salesOrder, String trackingNumber) {
+        String sql = "SELECT tracking_Number FROM tracking WHERE Sales_Order_Number = ? AND Tracking_Number = ?";
+
+        try {
+            String result = jdbcTemplate.queryForObject(sql, new Object[]{salesOrder, trackingNumber}, java.lang.String.class);
+        } catch (EmptyResultDataAccessException e) {
+            return false;
+        }
+
+        return true;
+
+    }
+
+
+
 }

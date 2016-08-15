@@ -10,9 +10,12 @@
 <html>
 <head>
     <title>Report For Sales Order #${salesOrder}</title>
-    <script type="text/javascript" src="/scripts/jquery-1.12.0.min.js"></script>
-    <script type="text/javascript" src="/scripts/jquery-barcode.min.js"></script>
-    <link rel="stylesheet" href="/style/shipping.css">
+    <script type="text/javascript" src="scripts/jquery-1.12.0.min.js"></script>
+    <script type="text/javascript" src="scripts/jquery-barcode.min.js"></script>
+    <link rel="stylesheet" href="style/shipping.css">
+    <STYLE TYPE="text/css">
+        P.breakhere {page-break-before: always}
+    </STYLE>
 </head>
 <body>
 <center>
@@ -59,7 +62,7 @@
     </tr>
     <tr>
         <th colspan="3">Region Code</th>
-        <td>${salesOrder}</td>
+        <td>${regionCode}</td>
     </tr>
     <tr>
         <th colspan="3">Route Code</th>
@@ -105,14 +108,14 @@
         <tr><td colspan="4" class="white"><hr /></td></tr>
         <tr>
             <th class="white">Line</th>
-            <th class="white">Quantity</th>
+            <th class="white">Qty</th>
             <th class="white">Part Number</th>
             <th class="white">Description</th>
         </tr>
         <tr>
             <td class="white">${status.count}</td>
             <td class="white">${shippingLine.quantity}</td>
-            <td class="white">${shippingLine.partNumber}</td>
+            <td class="white">${shippingLine.partNumber} / ${shippingLine.extendedPartNumber} (${shippingLine.infoPartNumber})</td>
             <td class="white">${shippingLine.description}</td>
         </tr>
         <tr>
@@ -125,6 +128,7 @@
         </tr>
     </s:iterator>
     <tr><td colspan="4" class="white"><hr color="red" /></td></tr>
+    <tr><td><P CLASS="breakhere">&nbsp;</P></td></tr>
 </table>
 </center>
 </body>
@@ -134,7 +138,7 @@
         $(".bcTarget").each(function(){
             var $this = $(this);
             var salesOrder = $this.find("input:first").val();
-            $this.barcode(salesOrder, "code39",{barWidth:3, barHeight:35, fontSize:15});
+            $this.barcode(salesOrder, "code39",{barWidth:2, barHeight:30, fontSize:15});
         });
 
     });

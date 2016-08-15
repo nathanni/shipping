@@ -19,7 +19,7 @@
     <table border="1" cellpadding="10" cellspacing="0">
 
         <tr>
-            <td align="center"><a href="shipping-report-detail-all">Vew Reports For All Sales Order</a></td>
+            <td align="center"><a href="shipping-report-detail-all?loadNumber=${loadNumber}">Vew Reports For All Sales Order</a></td>
 
         </tr>
         <s:iterator value="#session.reports" var="report">

@@ -1,3 +1,0 @@
-﻿1 SHIPTP 地址用自身的还是0开头的
-
-2 salesorder在ordermaster里面是唯一的吗

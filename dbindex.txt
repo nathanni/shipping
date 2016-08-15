@@ -1,0 +1,4 @@
+dts_plan_header
+create_date
+assigned_load
+TO_DATE("SO_CREATE_DATE",'yyyy-mm-dd')

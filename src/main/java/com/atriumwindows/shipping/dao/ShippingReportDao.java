@@ -21,9 +21,10 @@ public class ShippingReportDao extends BaseDao {
     public List<String> getShippingReportList(String loadNumber) {
         /*Only Search A, B, 0 orders*/
         String sql = "SELECT sales_order_number FROM DTS_PLAN_HEADER d " +
-                "WHERE to_date(d.so_create_date,'yyyy-mm-dd') >  Add_months(SYSDATE, -48) " +
+                "WHERE to_date(d.so_create_date,'yyyy-mm-dd') >  Add_months(SYSDATE, -12) " +
                 "AND d.assigned_load = ? AND " +
-                "(sales_order_number LIKE 'A%' OR sales_order_number LIKE 'B%' OR sales_order_number LIKE '0%')";
+                "(((sales_order_number LIKE 'A%' OR sales_order_number LIKE 'B%') AND HOW_SHIP = '27') " +
+                "OR sales_order_number LIKE '0%')";
 
         return jdbcTemplate.query(sql, new RowMapper<String>() {
             public String mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -89,7 +90,7 @@ public class ShippingReportDao extends BaseDao {
         List<ShippingReportLine> list;
         String sql = "SELECT l1.Quantity quantity, l2.Description description, l2.ProductionText productionText, " +
                 "l2.GlassText glassText, l2.PartNumberExact partNumber, " +
-                "l2.extendedpartnumber extentedPartNumber, l2.infopartnumber infoPartNumber " +
+                "substr(l2.extendedpartnumber, 0, 5) extendedPartNumber, l2.infopartnumber infoPartNumber " +
                 "FROM L1_Item l1 JOIN L2_Unit l2 ON l2.ItemId = l1.ItemId WHERE " +
                 "OrderId = ? ORDER BY l1.ItemId";
         try {
@@ -106,29 +107,15 @@ public class ShippingReportDao extends BaseDao {
         ShippingReport shippingReport;
         String sql = "SELECT d.assigned_load loadNumber," +
                 "      d.sales_order_number salesOrder, " +
-                "      c.accountid accountId, " +
-                "      c.account_name accountName, " +
                 "      d.so_create_date orderDate, " +
                 "      d.delivery_date dueDate, " +
                 "      d.how_ship shipCode, " +
                 "      s.shipcodedesc shipCodeDesc, " +
-                "      d.customer_po purchaseOrder, " +
-                "      c.address1 billAddress1, " +
-                "      c.address2 billAddress2, " +
-                "      c.city billCity, " +
-                "      c.state billState, " +
-                "      a.planregion regionCode, " +
-                "      a.route routeCode, " +
-                "      c.postal_code billZip " +
+                "      d.customer_po purchaseOrder " +
                 "      FROM dts_plan_header d " +
-                "      join address c " +
-                "           ON d.customer_code = c.accountid " +
-                "      join accountsmaster a " +
-                "           ON a.accountid = c.accountid " +
                 "      join shipcode s " +
                 "           ON d.how_ship = s.shipcode " +
-                "      WHERE  d.sales_order_number = ? " +
-                "           AND c.shipid = '00'||d .how_ship ";
+                "      WHERE  d.sales_order_number = ? ";
         try {
             shippingReport = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<ShippingReport>(ShippingReport.class), salesOrder);
         } catch (EmptyResultDataAccessException e) {
@@ -136,7 +123,7 @@ public class ShippingReportDao extends BaseDao {
             return null;
         }
 
-        /* fill missing info from ordermaster*/
+        /* fill missing info from ordermaster by o order*/
         getFieldsInfoFromOrdermaster(shippingReport);
 
         /* fill the line info*/
@@ -154,39 +141,58 @@ public class ShippingReportDao extends BaseDao {
             salesOrder = salesOrder.replaceFirst("^[AB]", "0");
         }
 
-        String sql = "SELECT To_char(om.cutoffdate, 'Day') cutOffDay," +
+        String sql = "SELECT c.accountid accountId, " +
+                "       c.account_name accountName, " +
+                "       To_char(om.cutoffdate, 'Day') cutOffDay," +
                 "       om.orderid orderId, " +
                 "       om.namejob jobName, " +
                 "       om.shipname shipName, " +
+                "       c.address1 billAddress1, " +
                 "       om.shipstreet1 shipAddress1, " +
+                "       c.address2 billAddress2, " +
                 "       om.shipstreet2 shipAddress2, " +
+                "       c.city billCity, " +
                 "       om.shipcity shipCity, " +
+                "       c.state billState, " +
                 "       om.shipstate shipState, " +
-                "       om.shipzip shipZip " +
-                "       FROM ordermaster om " +
-                "       WHERE om.salesorder = ? " +
-                "       AND rownum =1";
+                "       c.postal_code billZip, " +
+                "       om.shipzip shipZip, " +
+                "       a.planregion regionCode, " +
+                "       a.route routeCode " +
+                "       FROM ordermaster om" +
+                "       JOIN address c ON om.accountid = c.accountid" +
+                "       JOIN accountsmaster a ON a.accountid = c.accountid " +
+                "       WHERE om.salesorder = ? AND c.shipid = om.shipid";
 
 
         try {
             ShippingReport tempShippingReport;
             tempShippingReport = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<ShippingReport>(ShippingReport.class), salesOrder);
+            shippingReport.setAccountId(tempShippingReport.getAccountId());
+            shippingReport.setAccountName(tempShippingReport.getAccountName());
             shippingReport.setCutOffDay(tempShippingReport.getCutOffDay());
             shippingReport.setOrderId(tempShippingReport.getOrderId());
             shippingReport.setJobName(tempShippingReport.getJobName());
             shippingReport.setShipName(tempShippingReport.getShipName());
+            shippingReport.setBillAddress1(tempShippingReport.getBillAddress1());
             shippingReport.setShipAddress1(tempShippingReport.getShipAddress1());
+            shippingReport.setBillAddress2(tempShippingReport.getBillAddress2());
             shippingReport.setShipAddress2(tempShippingReport.getShipAddress2());
+            shippingReport.setBillCity(tempShippingReport.getBillCity());
             shippingReport.setShipCity(tempShippingReport.getShipCity());
+            shippingReport.setBillState(tempShippingReport.getBillState());
             shippingReport.setShipState(tempShippingReport.getShipState());
+            shippingReport.setBillZip(tempShippingReport.getBillZip());
             shippingReport.setShipZip(tempShippingReport.getShipZip());
+            shippingReport.setRegionCode(tempShippingReport.getRegionCode());
+            shippingReport.setRouteCode(tempShippingReport.getRouteCode());
         } catch (EmptyResultDataAccessException e) {}
 
 
     }
 
 
-    /* query for detail line infomations using itemid*/
+    /* query for detail line informations using itemid*/
     private List<ShippingReportLine> getShippingReportLinesFromItemids(String salesorder, String loadNumber) {
 
         List<ShippingReportLine> list = null;

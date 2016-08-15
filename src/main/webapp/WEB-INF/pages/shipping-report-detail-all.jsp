@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>All Reports</title>
+    <title>Report For Load#${loadNumber}</title>
     <style>
         table {
             width: 100%;

@@ -10,11 +10,6 @@
 <html>
 <head>
     <title>Report For Load#${loadNumber}</title>
-    <style>
-        table {
-            width: 100%;
-        }
-    </style>
 </head>
 <body>
 
